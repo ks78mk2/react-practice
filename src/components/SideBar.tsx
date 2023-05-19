@@ -3,9 +3,13 @@ const sideBarImg = require('../assets/images/sideBar1.png');
 const SideBar = () => {
   return (
     <>
-      <img style={{}} src={sideBarImg} alt="SideBar bar"></img>
+      <img className="SideBar" src={sideBarImg} alt="SideBar bar"></img>
     </>
   );
 };
+
+<script>
+
+</script>
 
 export default SideBar;
