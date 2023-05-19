@@ -14,7 +14,7 @@ const slideContent = (props : {}) =>  {
 }
 
 const BookList = () => {  
-  const slides = Array.from({ length: 10 }).map(
+  const slides = Array.from({ length: 3 }).map(
     (el, index) => `Slide ${index + 1}`
   );
 
@@ -28,7 +28,7 @@ const BookList = () => {
         <Swiper 
           navigation={true} 
           modules={[Navigation]} 
-          slidesPerView={5}
+          slidesPerView={'auto'}
         >
           {slides.map((item, index) => (
             <SwiperSlide key={item}>
