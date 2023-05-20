@@ -76,8 +76,6 @@ const BookList = () => {
     } else {
       bookmarkArr.push(id);
     }
-    console.log('bookmarkArr: ', bookmarkArr);
-    
     localStorage.setItem('bookmark', JSON.stringify(bookmarkArr));
     
     let updateBooks : Array<any> = [...books];
