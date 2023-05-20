@@ -111,8 +111,6 @@ const SwiperComponent = ( { type } : {type : number} ) => {
 }
 
 const BookList = () => {  
-  
-
   return (
     <div className="contentWrapper">
       <SwiperComponent type={1}></SwiperComponent>
