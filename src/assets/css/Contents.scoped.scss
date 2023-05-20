@@ -69,3 +69,23 @@
 .swiper-button-lock {
   display: block !important;
 }
+
+svg.bookmark {
+  cursor: pointer;
+  margin : 8px 0 18px 40px;
+  width: 40px; 
+  height : 40px 
+}
+
+.bookTitle {
+  line-height: 24px;
+  font-size: 14px;
+  margin-bottom: 4px;
+  margin-left: 50px;
+}
+.bookDesc {
+  font-size: 12px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.4);
+  margin-left: 50px;
+}
