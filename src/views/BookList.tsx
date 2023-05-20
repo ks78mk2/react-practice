@@ -1,20 +1,43 @@
 import { Navigation } from 'swiper';
+import { useState, useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import "swiper/css/navigation";
+import BookService from 'services/books'
 const bookImage = require('../assets/images/book.png');
 
-const slideContent = (props : {}) =>  {
+interface Book {
+  id : string,
+  title : string,
+  description ?: string
+}
+
+const slideContent = (props : Book) =>  {
   return (
     <>
       <div style={{ backgroundImage : `url(${bookImage})`, width: '230px', height: '260px'}}>
+        {props.title}
+        {props.description}
       </div>
     </>
   )
 }
 
 const BookList = () => {  
-  const slides = Array.from({ length: 3 }).map(
+  const [books, setBooks] = useState([]);
+  
+  useEffect(() => {
+    getBooks();
+  },[]);
+  
+  const getBooks = async () => {
+    let response : any = await BookService.getBookList();
+
+    const data = response.data;
+    setBooks(data);
+  }
+
+  const slides = Array.from({ length: 10 }).map(
     (el, index) => `Slide ${index + 1}`
   );
 
@@ -30,8 +53,8 @@ const BookList = () => {
           modules={[Navigation]} 
           slidesPerView={'auto'}
         >
-          {slides.map((item, index) => (
-            <SwiperSlide key={item}>
+          {books.map((item : Book, index) => (
+            <SwiperSlide key={item.id}>
               {slideContent(item)}
             </SwiperSlide>
           ))}
