@@ -33,24 +33,24 @@ const SlideContent = ({item, bookmarkFunction} : any) =>  {
   )
 }
 
-const BookList = () => {  
+const SwiperComponent = ( { type } : {type : number} ) => {
   const [books, setBooks] = useState([] as any);
   
   useEffect(() => {
-    if (localStorage.getItem('bookmark') == null) {
-      localStorage.setItem('bookmark', JSON.stringify([]))
+    if (localStorage.getItem(`bookmark${type}`) == null) {
+      localStorage.setItem(`bookmark${type}`, JSON.stringify([]))
     }
     getBooks();
   },[]);
   
   const getBooks = async () => {
-    let response : any = await BookService.getBookList();
+    let response : any = await BookService.getBookList(type);
 
     const data = response.data;
     let newData = [...data]
     for (let i=0; i<newData.length; i++) {
-      if (localStorage.getItem('bookmark') !== null) {
-        let _bookmark: string | null = localStorage.getItem('bookmark');
+      if (localStorage.getItem(`bookmark${type}`) !== null) {
+        let _bookmark: string | null = localStorage.getItem(`bookmark${type}`);
         let bookmarkArr = [];
         if (_bookmark != null) {
           bookmarkArr = JSON.parse(_bookmark);	
@@ -69,14 +69,14 @@ const BookList = () => {
   }
 
   const handleBookmark = (id : string) => {
-    let _bookmarkStr : string = localStorage.getItem('bookmark') || JSON.stringify([]);
+    let _bookmarkStr : string = localStorage.getItem(`bookmark${type}`) || JSON.stringify([]);
     let bookmarkArr = JSON.parse(_bookmarkStr);
     if (bookmarkArr.indexOf(id) > -1) {
       bookmarkArr.splice(bookmarkArr.indexOf(id), 1);
     } else {
       bookmarkArr.push(id);
     }
-    localStorage.setItem('bookmark', JSON.stringify(bookmarkArr));
+    localStorage.setItem(`bookmark${type}`, JSON.stringify(bookmarkArr));
     
     let updateBooks : Array<any> = [...books];
     for (let i=0; i<updateBooks.length; i++) {
@@ -86,15 +86,15 @@ const BookList = () => {
     }
     setBooks(updateBooks);
   }
-
+  
   return (
-    <div className="contentWrapper">
+    <>
       <div className="titleBox">
-        <p className="title-sm">회전목마 case 1</p>
+        <p className="title-sm">회전목마 case {type}</p>
         <p className="caption">full contents일 경우 최초 진입</p>
       </div>
       <div className="listBox">
-        <Swiper 
+        <Swiper
           navigation={true} 
           modules={[Navigation]} 
           slidesPerView={'auto'}
@@ -104,8 +104,19 @@ const BookList = () => {
               <SlideContent item={item} bookmarkFunction={handleBookmark}></SlideContent>
             </SwiperSlide>
           ))}
-      </Swiper>
+        </Swiper>
       </div>
+    </>
+  )
+}
+
+const BookList = () => {  
+  
+
+  return (
+    <div className="contentWrapper">
+      <SwiperComponent type={1}></SwiperComponent>
+      <SwiperComponent type={2}></SwiperComponent>
     </div>
   );
 };

@@ -1,50 +1,37 @@
 import { axios } from '../libs/index';
 
-interface books {
+interface Books {
     id: string
     title: string
     description?: string
 }
 class BookService {
-    getBookList() : Promise<{}> {
+    getBookList(type : number) : Promise<{}> {
         // return axios('GET', '/', params);
 
-        let list : books[] = [
-            {
-                id : '1',
-                title : '도서1',
-                description : '도서1 Description 입니다.'
-            },
-            {
-                id : '2',
-                title : '도서2',
-                description : '도서2 Description 입니다.'
-            },
-            {
-                id : '3',
-                title : '도서3',
-                description : '도서3 Description 입니다.'
-            },
-            {
-                id : '4',
-                title : '도서4',
-                description : '도서4 Description 입니다.'
-            },
-            {
-                id : '5',
-                title : '도서5',
-                description : '도서5 Description 입니다.'
-            },
-            {
-                id : '6',
-                title : '도서6',
-                description : '도서6 Description 입니다.'
-            },
-        ]
+        let list1 : Books[] = []
+        let list2 : Books[] = []
+
+        for (let i=0; i<8; i++) {
+            let number = i+1;
+            let data = {
+                id : `${number}`,
+                title : `도서${number}`,
+                description : `${number} Description 입니다.`
+            }
+            list1.push(data)
+            if (i < 3) {
+                list2.push(data)
+            }
+        }
 
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve({status : 200, data : list})
+                if (type == 1) {
+                    resolve({status : 200, data : list1})
+                } else {
+                    resolve({status : 200, data : list2})
+                }
             },0)
         })
     }
